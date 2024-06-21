@@ -11,4 +11,10 @@ export default defineConfig({
             refresh: true,
         }),
     ],
+    resolve: {
+        alias: {
+            $: 'jquery/src/jquery',
+            jQuery: 'jquery/src/jquery',
+        },
+    },
 });

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Producto; // Asegúrate de que el nombre coincida exactamente con el modelo
 
 class HomeController extends Controller
 {
@@ -23,6 +24,12 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $productos = Producto::where('stock', '>', 0)
+            ->orderBy('calificacion_promedio', 'desc')
+            ->take(15)
+            ->get();
+
+        // Retornar la vista con los datos de los productos
+        return view('home', compact('productos'));
     }
 }
