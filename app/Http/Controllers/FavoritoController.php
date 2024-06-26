@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Favorito;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
-
+use Barryvdh\DomPDF\Facade as PDF;
+use Carbon\Carbon;
 
 class FavoritoController extends Controller
 {
@@ -88,5 +90,16 @@ public function addToFavorites($productId)
     } catch (\Exception $e) {
         return response()->json(['message' => 'Error al procesar la solicitud'], 422);
     }
+}
+public function generarFavoritosPDF()
+{
+    // Obtener todos los favoritos
+    $favoritos = Favorito::with('producto')->get();
+
+    // Cargar la vista del PDF y pasar los datos
+    $pdf = \PDF::loadView('favoritos.pdf', compact('favoritos'));
+
+    // Descargar el PDF con un nombre específico
+    return $pdf->download('Favoritos.pdf');
 }
 }

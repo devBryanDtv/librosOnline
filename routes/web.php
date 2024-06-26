@@ -18,6 +18,9 @@ Route::get('/home', [HomeController::class, 'index'])->name('home');
 Route::resource('perfil', PerfilController::class)->only(['index', 'update']);
 Route::resource('ofertas', OfertaController::class)->except(['show']);
 Route::resource('favoritos', FavoritoController::class)->only(['index', 'store', 'destroy'])->middleware('auth');
+
+Route::get('/favoritos/generar-pdf', [FavoritoController::class, 'generarFavoritosPDF'])->name('favoritos.pdf');
+
 Route::get('/sitemap', [MapadeSitioController::class, 'index'])->name('sitemap.index');
 
 // Generar PDF
