@@ -26,7 +26,7 @@ class CreateOfertasTable extends Migration
             $table->text('restricciones')->nullable();
             $table->string('url_oferta', 255)->nullable();
             $table->string('imagen_url', 255)->nullable();
-            $table->date('fecha_creacion');
+            $table->timestamp('fecha_creacion')->default(DB::raw('CURRENT_TIMESTAMP'))->change();
             $table->timestamp('fecha_ultima_actualizacion')->nullable();
             $table->boolean('activo')->default(true);
             $table->string('vendedor', 100)->nullable();

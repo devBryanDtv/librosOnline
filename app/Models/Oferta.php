@@ -1,14 +1,10 @@
 <?php
-
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Oferta extends Model
 {
-    use HasFactory;
-
     protected $fillable = [
         'producto_id',
         'titulo',
@@ -21,8 +17,6 @@ class Oferta extends Model
         'restricciones',
         'url_oferta',
         'imagen_url',
-        'fecha_creacion',
-        'fecha_ultima_actualizacion',
         'activo',
         'vendedor',
         'tipo_oferta',
@@ -34,13 +28,17 @@ class Oferta extends Model
     protected $casts = [
         'fecha_inicio' => 'date',
         'fecha_fin' => 'date',
-        'fecha_creacion' => 'date',
-        'fecha_ultima_actualizacion' => 'datetime',
         'activo' => 'boolean',
     ];
 
     public function producto()
     {
         return $this->belongsTo(Producto::class, 'producto_id');
+    }
+
+    public function softDelete()
+    {
+        $this->activo = false;
+        $this->save();
     }
 }
